@@ -25,9 +25,7 @@ const TodoList = () => {
     setTodos(updatedTodo);
   };
 
-  const editHandler = (id: TodoItemType["id"],title: TodoItemType["title"]): void => {
-    console.log(id, title);
-    
+  const editHandler = (id: TodoItemType["id"],title: TodoItemType["title"]): void => {    
     const updatedTodo:TodoItemType[] = todos.map((item) => {
       if (item.id === id) {
         item.title = title

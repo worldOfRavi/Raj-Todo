@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useState } from "react";
 type PropType = {
   todo: TodoItemType;
@@ -24,7 +25,11 @@ const TodoItem = ({
 }: PropType) => {
   const [editActive, setEditActive] = useState<boolean>(false);
   const [textVal, setTextVal] = useState<string>(todo.title);
+  console.log(editActive);
+  
 
+  console.log(editActive);
+  
   return (
     <Paper sx={{ padding: "1rem" }} variant="elevation">
       <Stack direction={"row"} alignItems={"center"}>
@@ -35,7 +40,7 @@ const TodoItem = ({
             onKeyDown={(e) => {
               if (e.key === "Enter" && textVal !== "") {
                 editHandler(todo.id, textVal);
-                setEditActive((prev) => !prev);
+                setEditActive(false);
               }
             }}
           />
@@ -49,8 +54,16 @@ const TodoItem = ({
           checked={todo.isCompleted}
           onChange={() => completeHandler(todo.id)}
         />
-        <Button onClick={() => setEditActive((prev) => !prev)}>
-          <EditIcon />
+        <Button onClick={()=>{
+            if(editActive) {  
+              if(textVal !==""){
+                editHandler(todo.id, textVal)
+                setEditActive(false)
+              }
+              
+          } else setEditActive(prev=>!prev)
+        }} >
+          {editActive ? <CheckCircleIcon /> : <EditIcon />}
         </Button>
         <Button onClick={() => deleteHandler(todo.id)}>
           <DeleteIcon />
